@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherCast</title>
+    <link rel="icon" type="image/png" href="https://icons.iconarchive.com/icons/bokehlicia/captiva/256/weather-icon.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="loading-indicator" class="loading">
+        Loading...
+    </div>
+    <div class="container">
+        <header>
+            <h1>WeatherCast</h1>
+            
+        </header>
+        <search-section>
+            <form id="search-form">
+                <input type="text" id="search-input" placeholder="location">
+                <button type="submit" id="search-button">Search</button>
+            </form>
+        </search-section>
+        
+        <main>
+            <div class="current-weather">
+                <div class="location">
+                    <h2 id="location">City, Country</h2>
+                    <p id="date-time">Monday, 12:00 PM</p>
+                </div>
+                <div class="weather-info">
+                    <div class="weather-icon">
+                        <img src="" alt="Weather Icon" id="weather-icon">
+                    </div>
+                    <div class="temperature">
+                        <p id="temperature">0°C</p>
+                    </div>
+                    <div class="condition">
+                        <p id="condition">Weather Condition</p>
+                    </div>
+                </div>
+                <div class="extra-info">
+                    <p>Wind: <span id="wind"></span></p>
+                    <p>Precipitation: <span id="precipitation"></span></p>
+                </div>
+            </div>
+            <div class="hourly-forecast">
+                <h2>Hourly Forecast</h2>
+                <div class="hourly-forecast-container">
+                     <!-- Hourly forecast elements will be dynamically added here -->
+                </div>
+            </div>
+            
+            <div class="forecast">
+                <h2>Average Daily Forecast</h2>
+                <div class="forecast-days">
+                    <!-- Forecast for upcoming days will be displayed here -->
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+ <script src="script.js"></script>
+</body>
+</html>
