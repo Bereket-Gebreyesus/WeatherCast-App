@@ -27,15 +27,15 @@ Fetch API for making HTTP requests
 
 OpenWeatherMap API for weather data
 
-WeatherBit API for daily forecast data
+WeatherBit API for hourl and daily forecast data
 
 # Application Requirements
 
-Must-have features:
+## Must-have features:
 
 1.Current Weather: Display the current weather conditions, including temperature, humidity, wind speed, and weather icon.
 
-2.Location-based Forecast(Geo-location):  automatic detection of the user's location, providing personalised weather information without the need for manual input
+2.Location-based Forecast(Geo-location):  automatic detection of the user's location, providing personalised weather information without the need for manual input.
 
 3.Hourly Forecast: Include an option to view hourly weather forecasts for the selected location.
 
@@ -49,7 +49,7 @@ Must-have features:
 
 
 
-Nice-to-have features:
+## Nice-to-have features:
 
 1.Unit Conversion: Allow users to toggle between metric and imperial units for temperature.
 
