@@ -1,5 +1,5 @@
 const apiKey = '91d861c4ddf3ff35468aa398e37d166e';
-const newapiKey = '1f39650cee6848b0a937c82b5d236699';
+const newapiKey = '7dba7a93d20a47b4bf09026f9deace4e';
 const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
 const loadingIndicator = document.getElementById('loading-indicator');
