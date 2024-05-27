@@ -1,5 +1,6 @@
 const apiKey = '91d861c4ddf3ff35468aa398e37d166e';
 const newapiKey = '7dba7a93d20a47b4bf09026f9deace4e';
+const accuweatherApiKey = 'P6nTomlxgcimVgtEGfJPJLWHTIrWG5oe'
 const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
 const loadingIndicator = document.getElementById('loading-indicator');
@@ -116,14 +117,34 @@ function displayDailyForecast(forecastData) {
     }
 }
 
+// Fetch the location key based on latitude and longitude
+async function getLocationKey(latitude, longitude) {
+    try {
+        const response = await fetch(`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?q=${latitude},${longitude}&apikey=${accuweatherApiKey}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch location key');
+        }
+        const data = await response.json();
+        return data.Key; // Return the location key
+    } catch (error) {
+        console.error('Error fetching location key:', error);
+        return null;
+    }
+}
+
+// Fetch the hourly forecast using the location key
 async function getHourlyForecast(latitude, longitude) {
     try {
-        const response = await fetch(`https://api.weatherbit.io/v2.0/forecast/hourly?lat=${latitude}&lon=${longitude}&key=${newapiKey}&units=metric`);
+        const locationKey = await getLocationKey(latitude, longitude);
+        if (!locationKey) {
+            throw new Error('Failed to fetch location key');
+        }
+        const response = await fetch(`http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${locationKey}?apikey=${accuweatherApiKey}`);
         if (!response.ok) {
             throw new Error('Failed to fetch hourly forecast');
         }
         const data = await response.json();
-        return data.data.slice(0, 6); // Return hourly forecast data for the next 6 hours
+        return data;
     } catch (error) {
         console.error('Error fetching hourly forecast:', error);
         return null;
@@ -134,26 +155,36 @@ function displayHourlyForecast(hourlyForecastData) {
     const hourlyForecastContainer = document.querySelector('.hourly-forecast-container');
     hourlyForecastContainer.innerHTML = '';
 
-    hourlyForecastData.forEach(hourForecast => {
+    hourlyForecastData.slice(0, 6).forEach(hourForecast => {
         const hourElement = document.createElement('div');
         hourElement.classList.add('hour');
+
         const timeElement = document.createElement('div');
         timeElement.classList.add('hour-time');
+
         const temperatureElement = document.createElement('div');
         temperatureElement.classList.add('hour-temperature');
+
         const iconElement = document.createElement('img');
         iconElement.classList.add('hour-icon');
+        iconElement.alt = 'Weather icon';
 
-        const hourDate = new Date(hourForecast.timestamp_local); // Using timestamp_local for local time
+        const hourDate = new Date(hourForecast.DateTime); 
         const hour = hourDate.getHours();
         const minute = hourDate.getMinutes();
         timeElement.textContent = `${hour}:${minute < 10 ? '0' + minute : minute}`;
-        temperatureElement.textContent = `${Math.round(hourForecast.temp)}°C`;
-        iconElement.src = `https://www.weatherbit.io/static/img/icons/${hourForecast.weather.icon}.png`; 
+
+        
+        // Convert temperature from Fahrenheit to Celsius
+        const temperatureCelsius = (hourForecast.Temperature.Value - 32) * 5 / 9;
+        temperatureElement.textContent = `${Math.round(temperatureCelsius)}°C`;
+
+        const iconNumber = hourForecast.WeatherIcon.toString().padStart(2, '0');
+        iconElement.src = `https://developer.accuweather.com/sites/default/files/${iconNumber}-s.png`;
 
         hourElement.appendChild(timeElement);
         hourElement.appendChild(temperatureElement);
-        hourElement.appendChild(iconElement); 
+        hourElement.appendChild(iconElement);
         hourlyForecastContainer.appendChild(hourElement);
     });
 }
