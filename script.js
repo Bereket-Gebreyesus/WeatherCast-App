@@ -55,7 +55,7 @@ function displayCurrentWeather(data) {
 
     locationElement.textContent = `${name}, ${sys.country}`;
     dateTimeElement.textContent = getCurrentDateTime();
-    weatherIconElement.src = `http://openweathermap.org/img/wn/${weather[0].icon}.png`;
+    weatherIconElement.src = `https://openweathermap.org/img/wn/${weather[0].icon}.png`;
     temperatureElement.textContent = `${Math.round(main.temp)}°C`;
     conditionElement.textContent = weather[0].description;
     windElement.textContent = `${wind.speed} m/s`;
@@ -120,7 +120,7 @@ function displayDailyForecast(forecastData) {
 // Fetch the location key based on latitude and longitude
 async function getLocationKey(latitude, longitude) {
     try {
-        const response = await fetch(`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?q=${latitude},${longitude}&apikey=${accuweatherApiKey}`);
+        const response = await fetch(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?q=${latitude},${longitude}&apikey=${accuweatherApiKey}`);
         if (!response.ok) {
             throw new Error('Failed to fetch location key');
         }
@@ -139,7 +139,7 @@ async function getHourlyForecast(latitude, longitude) {
         if (!locationKey) {
             throw new Error('Failed to fetch location key');
         }
-        const response = await fetch(`http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${locationKey}?apikey=${accuweatherApiKey}`);
+        const response = await fetch(`https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${locationKey}?apikey=${accuweatherApiKey}`);
         if (!response.ok) {
             throw new Error('Failed to fetch hourly forecast');
         }
